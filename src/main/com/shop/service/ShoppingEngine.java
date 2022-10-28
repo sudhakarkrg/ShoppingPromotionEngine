@@ -21,11 +21,10 @@ public class ShoppingEngine {
      */
     public double checkOut(ShoppingCart cart) {
         Map<Sku, Integer> cartItems = cart.getCartItems();
-        Set<Map.Entry<Sku, Integer>> cartItemEntries = cartItems.entrySet();
         // This map contains map of cart items mapped under each promotion's
         // Example map of ("promotioncode", map of all (skus under this promotion, cartTotal cart items))
         Map<String, Map<Sku, Integer>> promotionCartItemsBuckets = new HashMap<>();
-        for(Map.Entry<Sku, Integer> cartItemEntry : cartItemEntries) {
+        for(Map.Entry<Sku, Integer> cartItemEntry : cartItems.entrySet()) {
             Sku sku = cartItemEntry.getKey();
             String promotionCode = PromotionMapper.getPromotionCode(sku.getSkuName());
             Map<Sku, Integer> shoppedItems = promotionCartItemsBuckets.get(promotionCode);
@@ -47,8 +46,7 @@ public class ShoppingEngine {
      */
     public double calculateCartTotal(Map<String, Map<Sku, Integer>> promotionCartItemsBuckets) {
         double cartTotal = 0;
-        Set<Map.Entry<String, Map<Sku, Integer>>> promotionCartEntries = promotionCartItemsBuckets.entrySet();
-        for(Map.Entry<String, Map<Sku, Integer>> promotionCartEntry : promotionCartEntries) {
+        for(Map.Entry<String, Map<Sku, Integer>> promotionCartEntry : promotionCartItemsBuckets.entrySet()) {
             String promotionCode = promotionCartEntry.getKey();
             Promotion promotion = PromotionMapper.getPromotion(promotionCode);
             Map<Sku, Integer> itemUnderPromotion = promotionCartEntry.getValue();
