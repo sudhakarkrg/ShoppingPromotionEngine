@@ -13,6 +13,7 @@ import java.util.Map;
 class SingleSkuMultiplesPromotionTest {
     private static Sku skuA;
     private static SingleSkuMultiplesPromotion singleSkuMultiplesPromotionType;
+    // Map represents sku shopped and total Qty shopped
     private static Map<Sku, Integer> itemsShoppedUsingThisPromotion;
 
     @BeforeAll
@@ -28,19 +29,19 @@ class SingleSkuMultiplesPromotionTest {
     }
 
     @Test
-    void testSingleSkuMultiplesPromotionForOneQty() {
+    void testWithOneQty() {
         itemsShoppedUsingThisPromotion.put(skuA, 1);
         assertEquals(60, singleSkuMultiplesPromotionType.calculateTotal(itemsShoppedUsingThisPromotion));
     }
 
     @Test
-    void testSingleSkuMultiplesPromotionForExactMultiples() {
+    void testWithMultipleQty() {
         itemsShoppedUsingThisPromotion.put(skuA, 3);
         assertEquals(130, singleSkuMultiplesPromotionType.calculateTotal(itemsShoppedUsingThisPromotion));
     }
 
     @Test
-    void testSingleSkuMultiplesPromotionForMoreThanExactMultiples() {
+    void testWithMoreThanExactMultiples() {
         itemsShoppedUsingThisPromotion.put(skuA, 5);
         assertEquals(250, singleSkuMultiplesPromotionType.calculateTotal(itemsShoppedUsingThisPromotion));
     }
